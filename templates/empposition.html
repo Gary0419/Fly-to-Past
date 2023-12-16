@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>員工查詢—以職位</title>
+</head>
+<body>
+    <h2>員工查詢</h2>
+    <form action="/employee/position/submit" method="post">
+        <table border="1">
+            <tr>
+                <!-- 顯示職位種類 -->
+                <th>employee_position</th>
+                <!-- 顯示職位總人數 -->
+                <th>total_employee</th>
+                <th>selection</th>
+            </tr>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp['employee_position'] }}</td>
+                <td>{{ emp['employee_count'] }}</td>
+                <td>
+                    <input type="radio" id="employeeRadio{{ emp['employee_position'] }}" name="selectedemployee" value="{{ emp['employee_position'] }}">
+                    <label for="employeeRadio{{ emp['employee_position'] }}"></label><br>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

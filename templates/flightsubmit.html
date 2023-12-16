@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>航班搜尋结果</title>
+</head>
+<body>
+    <h2>航班搜尋结果</h2>
+    <p>出發日期：{{ start_date }} 至 {{ end_date }}</p>
+    <p>從 {{ departure }} 往 {{ destination }}</p>
+    <table border="1">
+        <tr>
+            <th>flight_id</th>
+            <th>plane_id</th>
+            <th>depart_airport</th>
+            <th>arrive_airport</th>
+            <th>depart_time</th>
+            <th>arrive_time</th>
+            <th>ticket_sell_rate</th>
+        </tr>
+        {% for flight in data %}
+        <tr>
+            <td>{{ flight['flight_id'] }}</td>
+            <td>{{ flight['plane_id'] }}</td>
+            <td>{{ flight['depart_airport'] }}</td>
+            <td>{{ flight['arrive_airport'] }}</td>
+            <td>{{ flight['depart_time'] }}</td>
+            <td>{{ flight['arrive_time'] }}</td>
+            <td>
+                {% if flight['max_sell_amount'] > 0 %}
+                    {{ '%.5f'|format(flight['ticket_sold'] / flight['max_sell_amount']) }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

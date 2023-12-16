@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>航班查詢</title>
+</head>
+<body>
+    <h2>航班查詢</h2>
+    <form action="/flight/search/submit" method="post">
+        <div>
+            <label for="start_date">出發日期：</label>
+            <!-- 设置預設日期值，例如今天的日期 -->
+            <input type="date" id="start_date" name="start_date" >
+            <span> ~ </span>
+            <!-- 设置預設日期值，例如明天的日期 -->
+            <input type="date" id="end_date" name="end_date">
+        </div>
+        <br>
+        <div>
+            <label for="departure">出發地：</label>
+            <select id="departure" name="departure" >
+                <!-- 設置預設出發地，這裡我們預設選擇未選擇 -->
+                <option value="default_departure" selected>未選擇</option>
+                {% for airport in data %}
+                    <option value="{{ airport['airport_id'] }}"> {{ airport['airport_name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <div>
+            <label for="destination">目的地：</label>
+            <select id="destination" name="destination" >
+                <!-- 設置預設目的地，這裡我們預設選擇未選擇 -->
+                <option value="default_destination" selected>未選擇</option>
+                {% for airport in data %}
+                    <option value="{{ airport['airport_id'] }}"> {{ airport['airport_name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

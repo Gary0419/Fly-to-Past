@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>員工查詢結果</title>
+</head>
+<body>
+    <h2>員工查詢結果</h2>
+
+    <table border="1">
+        <tr>
+            {% for key in keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+        </tr>
+        {% for emp in employees %}
+        <tr>
+            {% for key in keys %}
+            <td>{{ emp[key] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
