@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>即將需保養的零件</title>
+</head>
+<body>
+    <h2>即將需保養的零件</h2>
+
+    <table border="1">
+        <tr>
+            <th>{{ date }}</th>
+            <th>{{ date + 1 day }}</th>
+            <th>{{ date + 2 days }}</th>
+            <th>{{ date + 3 days }}</th>
+            <th>{{ date + 4 days }}</th>
+            <th>{{ date + 5 days }}</th>
+            <th>{{ date + 6 days }}</th>
+        </tr>
+        <tr>
+            {% for day in range(7) %}
+            <td>
+                {% for part in schedule[date + day] %}
+                    Part ID: {{ part['parts_id'] }}, Plane ID: {{ part['plane_id'] }}<br>
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+</body>
+</html>

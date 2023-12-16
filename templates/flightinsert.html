@@ -28,8 +28,8 @@
         </div>
         <br>
         <div>
-            <label for="departure">目的地：</label>
-            <select id="departure" name="departure">
+            <label for="destination">目的地：</label>
+            <select id="destination" name="destination">
                 {% for airport in airports %}
                         <option value="{{ airport['airport_id'] }}">{{ airport['airport_name'] }}</option>
                 {% endfor %}

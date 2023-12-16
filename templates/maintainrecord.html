@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新增維修紀錄</title>
+</head>
+<body>
+    <h2>新增維修紀錄</h2>
+    <form action="/maintainrecord/insert/submit" method="post">
+        <div>
+            <!-- 设置維修日期值 -->
+            <label for="mt_date">維修日期：</label>
+            <input type="date" id="mt_date" name="mt_date">
+        </div>
+        <br>
+        <div>
+            <label for="worker_id">員工編號：</label>
+            <input type="text" id="worker_id" name="worker_id">
+        </div>
+        <br>
+        <div>
+            <label for="parts_id">部件編號：</label>
+            <input type="text" id="parts_id" name="parts_id">
+        </div>
+        <br>
+        <div>
+            <label for="mt_cost">維修費用：</label>
+            <input type="number" id="mt_cost" name="mt_cost" min="0" max="9999999">
+        </div>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>修改機票狀態</title>
+</head>
+<body>
+    <h2>修改機票狀態</h2>
+    <form action="/ticket/update/submit" method="post">
+        <div>
+            <!-- 设置維修日期值 -->
+            <label for="ticket_id">更改機票之機票編號：</label>
+            <input type="text" id="ticket_id" name="ticket_id">
+        </div>
+        <br>
+        <div>
+            <label for="status">部件編號：</label>
+            <select id="status" name="status">
+                <option value="P">已購買原始狀態</option>
+                <option value="PC">顧客取消機票未退款狀態</option>
+                <option value="PCR">顧客取消機票已退款狀態</option>
+                <option value="PD">班機取消刪除機票未退款狀態</option>
+                <option value="PDR">班機取消刪除機票已退款狀態</option>
+            </select>
+        </div>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+    
+</body>
+</html>

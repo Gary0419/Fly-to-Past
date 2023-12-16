@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>機組人員查詢結果</title>
+</head>
+<body>
+    <h2>機組人員查詢結果</h2>
+
+    <table border="1">
+        <tr>
+            {% for key in keys %}
+            <th>{{key}}</th>
+            {% endfor %}
+        </tr>
+        {% for crew in execute %}
+        <tr>
+            {% for key in keys %}
+            <td>{{ crew[key] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
