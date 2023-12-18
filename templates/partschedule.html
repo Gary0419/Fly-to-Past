@@ -8,19 +8,19 @@
 
     <table border="1">
         <tr>
-            <th>{{ date }}</th>
-            <th>{{ date + 1 day }}</th>
-            <th>{{ date + 2 days }}</th>
-            <th>{{ date + 3 days }}</th>
-            <th>{{ date + 4 days }}</th>
-            <th>{{ date + 5 days }}</th>
-            <th>{{ date + 6 days }}</th>
+            {% for i in range(7) %}
+            <th>{{ days[i] }}</th>
+            {% endfor %}
         </tr>
         <tr>
-            {% for day in range(7) %}
-            <td>
-                {% for part in schedule[date + day] %}
-                    Part ID: {{ part['parts_id'] }}, Plane ID: {{ part['plane_id'] }}<br>
+            {% for i in range(7) %}
+            <td valign="top">
+                {% for plane in keys[i] %}
+                    Plane ID: {{ plane }}<br>
+                    {% for row in schedule[i][plane] %}
+                        - Parts ID: {{ row['parts_id'] }}<br>                    
+                    {% endfor %}
+                    <br>
                 {% endfor %}
             </td>
             {% endfor %}

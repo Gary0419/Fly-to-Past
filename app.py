@@ -32,19 +32,61 @@ def flightSubmit():
     departure = request.form.get('departure')
     destination = request.form.get('destination')
 
-    sql_cmd = f"""
-                Select f.*, r.depart_airport, r.arrive_airport, s.ticket_sold
-                From (Select *
-                        From flight
-                        Where DATE(depart_time) Between '{start_date}' And
-                        '{end_date}') As f
-                Join route As r on f.route_id = r.route_id
-                Left Join (Select flight_id , Count(*) As ticket_sold
-                            From ticket
-                            Group by flight_id) As s on f.flight_id = s.flight_id
-                Where r.depart_airport = {departure} And r.arrive_airport = {destination}
-                Order By f.depart_time;
-                """
+    if departure == 'default_departure' and destination == 'default_destination':
+        sql_cmd = f"""
+                    Select f.*, r.depart_airport, r.arrive_airport, s.ticket_sold
+                    From (Select *
+                            From flight
+                            Where DATE(depart_time) Between '{start_date}' And
+                            '{end_date}') As f
+                    Join route As r on f.route_id = r.route_id
+                    Left Join (Select flight_id , Count(*) As ticket_sold
+                                From ticket
+                                Group by flight_id) As s on f.flight_id = s.flight_id
+                    Order By f.depart_time;
+                    """
+    elif departure == 'default_departure':
+        sql_cmd = f"""
+                    Select f.*, r.depart_airport, r.arrive_airport, s.ticket_sold
+                    From (Select *
+                            From flight
+                            Where DATE(depart_time) Between '{start_date}' And
+                            '{end_date}') As f
+                    Join route As r on f.route_id = r.route_id
+                    Left Join (Select flight_id , Count(*) As ticket_sold
+                                From ticket
+                                Group by flight_id) As s on f.flight_id = s.flight_id
+                    Where r.arrive_airport = {destination}
+                    Order By f.depart_time;
+                    """
+    elif destination == 'default_destination':
+        sql_cmd = f"""
+                    Select f.*, r.depart_airport, r.arrive_airport, s.ticket_sold
+                    From (Select *
+                            From flight
+                            Where DATE(depart_time) Between '{start_date}' And
+                            '{end_date}') As f
+                    Join route As r on f.route_id = r.route_id
+                    Left Join (Select flight_id , Count(*) As ticket_sold
+                                From ticket
+                                Group by flight_id) As s on f.flight_id = s.flight_id
+                    Where r.depart_airport = {departure}
+                    Order By f.depart_time;
+                    """
+    else:
+        sql_cmd = f"""
+                    Select f.*, r.depart_airport, r.arrive_airport, s.ticket_sold
+                    From (Select *
+                            From flight
+                            Where DATE(depart_time) Between '{start_date}' And
+                            '{end_date}') As f
+                    Join route As r on f.route_id = r.route_id
+                    Left Join (Select flight_id , Count(*) As ticket_sold
+                                From ticket
+                                Group by flight_id) As s on f.flight_id = s.flight_id
+                    Where r.depart_airport = {departure} And r.arrive_airport = {destination}
+                    Order By f.depart_time;
+                    """
  
     query_data = db.session.execute(text(sql_cmd))
     keys = query_data.keys()
@@ -116,12 +158,18 @@ def flightDel():
 def flightDelSubmit():
     id = request.form.get('flight_id')
 
-    sql_cmd = f"""
+    sql1 = f"""
                 Delete From flight
                 Where flight_id = {id};
                 """
+    sql2 = f"""
+                Update ticket
+                Where flight_id = {id}
+                And status = 'P';
+                """
  
-    db.session.execute(text(sql_cmd))
+    db.session.execute(text(sql1))
+    db.session.execute(text(sql2))
     db.session.commit()
     return "Success"
 
@@ -144,6 +192,25 @@ def flightCrewSubmit():
     keys = query_data.keys()
     query_data = query_data.fetchall()
     return render_template('flightcrewsubmit.html', execute = query_data, keys = keys)
+
+@app.route("/flight/crew/delete")
+def flightCrewDelete():
+    return render_template('crewdelete.html')
+
+@app.route("/flight/crew/delete/submit", methods=['POST'])
+def flightCrewDeleteSubmit():
+    flight_id = request.form.get('flight_id')
+    employee_id = request.form.get('employee_id')
+
+    sql_cmd = f"""
+                Delete From execute
+                Where flight_id = {flight_id}
+                And employee_id = {employee_id};
+                """
+ 
+    db.session.execute(text(sql_cmd))
+    db.session.commit()
+    return 'Success'
 
 @app.route("/employee/position")
 def empPosition():
@@ -207,9 +274,17 @@ def partSchedule():
         ORDER BY mt_needed, pt.plane_id;
     """
     query_data = db.session.execute(text(sql_cmd))
-    keys = query_data.keys()
-    query_data = query_data.fetchall()
-    return render_template('test.html', data = query_data, keys = keys)
+    days = [start_date + timedelta(days=i) for i in range(7)]
+    schedule = [{} for i in range(7)]
+    for row in query_data:
+        for i in range(7):
+            if row[2] == days[i]:
+                if row[1] not in schedule[i].keys():
+                    schedule[i][row[1]] = [row]
+                else:
+                    schedule[i][row[1]].append(row)
+    keys = [schedule[i].keys() for i in range(7)]
+    return render_template('partschedule.html', schedule = schedule, keys = keys, days = days)
 
 @app.route("/maintainrecord")
 def maintainRecord():

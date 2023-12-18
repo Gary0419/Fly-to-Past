@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>刪除機組人員</title>
+</head>
+<body>
+    <h2>刪除機組人員</h2>
+    <form action="/flight/crew/delete/submit" method="post">
+        <table>
+            <tr>
+                <td><label for="flight_id">輸入航班編號：</label></td>
+                <td><input type="text" id="flight_id" name="flight_id"></td>
+            </tr>
+            <tr>
+                <td><label for="employee_id">輸入員工編號：</label></td>
+                <td><input type="text" id="employee_id" name="employee_id"></td>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>
