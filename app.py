@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def home():
-    return "Hello, World!"
+    return render_template('home.html')
 
 @app.route("/flight/search")
 def flightSearch():
@@ -148,7 +148,7 @@ def flightInsSubmit():
  
     db.session.execute(text(sql_cmd))
     db.session.commit()
-    return 'Success'
+    return render_template('success.html')
 
 @app.route("/flight/delete")
 def flightDel():
@@ -171,7 +171,7 @@ def flightDelSubmit():
     db.session.execute(text(sql1))
     db.session.execute(text(sql2))
     db.session.commit()
-    return "Success"
+    return render_template('success.html')
 
 @app.route("/flight/crew")
 def flightCrew():
@@ -193,6 +193,29 @@ def flightCrewSubmit():
     query_data = query_data.fetchall()
     return render_template('flightcrewsubmit.html', execute = query_data, keys = keys)
 
+@app.route("/flight/crew/insert")
+def flightCrewInsert():
+    return render_template('crewinsert.html')
+
+@app.route("/flight/crew/insert/submit", methods=['POST'])
+def flightCrewInsertSubmit():
+    flight_id = request.form.get('flight_id')
+    employee_id = request.form.get('employee_id')
+    employee_title = request.form.get('employee_title')
+
+    sql_cmd = f"""
+                Insert into execute (
+                    flight_id, employee_id, employee_title
+                )
+                Values (
+                    {flight_id}, {employee_id}, '{employee_title}'
+                );
+                """
+ 
+    db.session.execute(text(sql_cmd))
+    db.session.commit()
+    return render_template('success.html')
+
 @app.route("/flight/crew/delete")
 def flightCrewDelete():
     return render_template('crewdelete.html')
@@ -210,7 +233,7 @@ def flightCrewDeleteSubmit():
  
     db.session.execute(text(sql_cmd))
     db.session.commit()
-    return 'Success'
+    return render_template('success.html')
 
 @app.route("/employee/position")
 def empPosition():
@@ -304,7 +327,7 @@ def maintainRecordSubmit():
  
     db.session.execute(text(sql_cmd))
     db.session.commit()
-    return "Success"
+    return render_template('success.html')
 
 @app.route("/ticket/update")
 def ticUpdate():
@@ -323,7 +346,7 @@ def ticUpdateSubmit():
  
     db.session.execute(text(sql_cmd))
     db.session.commit()
-    return "Success"
+    return render_template('success.html')
 
 if __name__ == '__main__':
     app.run()
