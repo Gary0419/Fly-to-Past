@@ -58,12 +58,25 @@
         input[type="submit"]:hover {
             background-color: #449048;
         }
+        a, button {
+            display: inline-block;
+            padding: 12px;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        a:hover, button:hover {
+            background-color: #449048;
+        }
     </style>
 </head>
 <body>
     <h2>操作成功</h2>
-    <ul>
-        <li><a href="{{ url_for('home') }}">回到首頁</a></li>
-    </ul>
+    <td><a href="{{ url_for('home') }}">回到首頁</a></td>
 </body>
 </html>

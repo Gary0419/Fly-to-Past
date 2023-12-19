@@ -5,75 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首頁</title>
     <style>
-        ul {
-            list-style-type: none;
-        }
         body {
-            text-align: center; /* 將文本居中對齊 */
-            background-color: #f0f0f0; /* 淺灰色背景 */
+            text-align: center;
+            background-color: #f0f0f0;
         }
 
         h2 {
-            margin-top: 50px; /* 调整标题的上边距，使其居中 */
+            margin-top: 50px;
             font-size: 48px; 
         }
 
-        form {
-            margin: 0 auto; /* 將表單水平居中對齊 */
-            width: 50%; /* 設定表單寬度 */
-            text-align: left; /* 將表單內文本居左對齊 */
-        }
-
         table {
-            width: 100%; /* 讓表格寬度充滿其父元素（這裡是form） */
+            width: 50%;
+            margin: 20px auto;
+            text-align: left;
+            border-collapse: collapse;
         }
 
-        label {
-            display: block; /* 讓label佔據一整行，使得表單元素下一行排列 */
-            margin-bottom: 10px; /* 調整label下邊距，增加垂直間距 */
-        }
-        input {
-            width: 100%; /* 讓選擇框和輸入框充滿其父元素 */
-            padding: 8px; /* 調整內邊距，使得元素內容與邊框有一定的間距 */
-            margin-bottom: 15px; /* 增加元素之間的垂直間距 */
-        }
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            box-sizing: border-box; /* 設定框模型為邊框盒模型，防止邊框增加元素寬度 */
-            font-size: 16px; /* 設定字體大小 */
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
+        th {
+            background-color: #6a7d6b;
             color: white;
-            padding: 8px 12px;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        td {
+            padding: 15px;
+            width: 33.33%; /* 將每個 td 元素均分為三等份 */
+            text-align: center;
+        }
+
+        a, button {
+            display: inline-block;
+            padding: 12px;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
         }
 
-        input[type="submit"]:hover {
+        a:hover, button:hover {
             background-color: #449048;
         }
     </style>
 </head>
 <body>
     <h2>首頁</h2>
-    <ul>
-        <li><a href="{{ url_for('flightSearch') }}">航班查詢</a></li>
-        <li><a href="{{ url_for('flightIns') }}">新增航班</a></li>
-        <li><a href="{{ url_for('flightDel') }}">刪除航班</a></li>
-        <li><a href="{{ url_for('flightCrew') }}">查詢航班機組人員</a></li>
-        <li><a href="{{ url_for('flightCrewInsert') }}">新增機組人員</a></li>
-        <li><a href="{{ url_for('flightCrewDelete') }}">刪除機組人員</a></li>
-        <li><a href="{{ url_for('empPosition') }}">員工查詢—以職位</a></li>
-        <li><a href="{{ url_for('empId') }}">員工查詢—以編號</a></li>
-        <li><a href="{{ url_for('partSchedule') }}">即將需保養的零件</a></li>
-        <li><a href="{{ url_for('maintainRecord') }}">新增維修紀錄</a></li>
-        <li><a href="{{ url_for('ticUpdate') }}">修改機票狀態</a></li>
-    </ul>
+
+    <table>
+        <tr>
+            <th colspan="3">航班</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url_for('flightSearch') }}">查詢航班</a></td>
+            <td><a href="{{ url_for('flightIns') }}">新增航班</a></td>
+            <td><a href="{{ url_for('flightDel') }}">刪除航班</a></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="3">機組人員</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url_for('flightCrew') }}">查詢航班機組人員</a></td>
+            <td><a href="{{ url_for('flightCrewInsert') }}">新增機組人員</a></td>
+            <td><a href="{{ url_for('flightCrewDelete') }}">刪除機組人員</a></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="3">員工</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url_for('empPosition') }}">員工查詢—以職位</a></td>
+            <td><a href="{{ url_for('empId') }}">員工查詢—以編號</a></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="3">零件保養</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url_for('partSchedule') }}">即將需保養的零件</a></td>
+            <td><a href="{{ url_for('maintainRecord') }}">新增維修紀錄</a></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="3">機票</th>
+        </tr>
+        <tr>
+            <td><a href="{{ url_for('ticUpdate') }}" colspan="3">修改機票狀態</a></td>
+        </tr>
+    </table>
 </body>
 </html>

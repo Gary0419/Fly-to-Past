@@ -164,8 +164,8 @@ def flightDelSubmit():
                 """
     sql2 = f"""
                 Update ticket
-                Where flight_id = {id}
-                And status = 'P';
+                Set status = 'P'
+                Where flight_id = {id};
                 """
  
     db.session.execute(text(sql1))
