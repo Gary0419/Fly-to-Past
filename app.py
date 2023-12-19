@@ -313,7 +313,7 @@ def partSchedule():
 def maintainRecord():
     return render_template('maintainrecord.html')
 
-@app.route("/maintainrecord/submit")
+@app.route("/maintainrecord/submit", methods=['POST'])
 def maintainRecordSubmit():
     mt_date = request.form.get('mt_date')
     worker_id = request.form.get('worker_id')
@@ -321,7 +321,7 @@ def maintainRecordSubmit():
     mt_cost = request.form.get('mt_cost')
 
     sql_cmd = f"""
-                Insert Into maintain (parts_id , employee_id, maintain_date , maintain_fee)
+                Insert Into maintain (parts_id , employee_id, maintain_date , maintain_cost)
                 Values ({parts_id}, {worker_id}, '{mt_date}', {mt_cost});
                 """
  
